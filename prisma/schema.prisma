@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  orderId   String   @unique
+  amount    Int
+  status    String   @default("created")
+  paymentId String?
+  createdAt DateTime @default(now())
+}
+
+model PaymentCount {
+  id        Int      @id @default(autoincrement())
+  amount    Int      @unique
+  count     Int      @default(0)
+  updatedAt DateTime @updatedAt
+}
+
+model Badge {
+  id         String   @id @default(cuid())
+  amount     Int      @unique
+  badgeId    String   @unique
+  signature  String
+  orderId    String
+  claimToken String?
+  createdAt  DateTime @default(now())
+}
